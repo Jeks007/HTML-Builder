@@ -2,39 +2,48 @@
 
 const path = require('path');
 const { execSync } = require('child_process');
-
-let __browserOpened = false;
+const fs = require('fs');
 
 function openHTML(filePath) {
     try {
         const absolutePath = path.resolve(filePath);
         
-        // Быстрая проверка файла
-        const fs = require('fs');
+        // Проверка существования файла
         if (!fs.existsSync(filePath)) {
-            process.stderr.write('❌ File not found');
+            console.error('❌ File not found:', filePath);
             process.exit(1);
         }
         
-        process.stdout.write(`✅ Opening: ${path.basename(filePath)}`);
+        console.log('✅ Opening:', path.basename(filePath));
         
-        // Открываем исходный файл
+        // Кроссплатформенное открытие файла
         if (process.platform === 'win32') {
-            execSync(`cmd /c start "" "${absolutePath}"`, { 
+            // Windows
+            execSync(`start "" "${absolutePath}"`, { 
                 stdio: 'ignore',
                 windowsHide: true 
             });
+        } else if (process.platform === 'darwin') {
+            // macOS
+            execSync(`open "${absolutePath}"`, { stdio: 'ignore' });
+        } else {
+            // Linux
+            execSync(`xdg-open "${absolutePath}"`, { stdio: 'ignore' });
         }
-        process.stdout.write(' 🌐');
+        
+        console.log('🌐 Browser opened');
         
     } catch (error) {
-        process.stderr.write('❌ Error: ' + error.message);
+        console.error('❌ Error:', error.message);
         process.exit(1);
     }
 }
 
-// Парсинг аргументов
-const args = process.argv;
-if (args.length < 3) process.exit(1);
+// Обработка аргументов командной строки
+const args = process.argv.slice(2);
+if (args.length === 0) {
+    console.log('Usage: node build.js <file.html> [--open]');
+    process.exit(1);
+}
 
-openHTML(args[2]);
+openHTML(args[0]);

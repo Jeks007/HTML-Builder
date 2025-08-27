@@ -1,12 +1,12 @@
 {
-    "shell_cmd": "node \"${packages}/User/HTML-Builder/build.js\" \"$file\"",
+    "shell_cmd": "node \"${packages}/HTML-Builder/build.js\" \"$file\"",
     "selector": "text.html",
     "working_dir": "$file_path",
     "encoding": "utf-8",
     "variants": [
         {
             "name": "Build and Open",
-            "shell_cmd": "node \"${packages}/User/HTML-Builder/build.js\" \"$file\" --open"
+            "shell_cmd": "node \"${packages}/HTML-Builder/build.js\" \"$file\" --open"
         }
     ]
 }
