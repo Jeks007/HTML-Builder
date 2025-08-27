@@ -1,0 +1,15 @@
+{
+    "name": "HTML Builder",
+    "details": "https://github.com/Jeks007/HTML-Builder",
+    "releases": [
+        {
+            "sublime_text": ">=3080",
+            "tags": true,
+            "version": "1.0.0"
+        }
+    ],
+    "description": "Ultra-fast HTML file opener for Sublime Text with instant browser preview",
+    "author": "Jeks007",
+    "homepage": "https://github.com/Jeks007/HTML-Builder",
+    "labels": ["html", "browser", "preview", "opener"]
+}
